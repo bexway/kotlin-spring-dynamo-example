@@ -27,6 +27,78 @@ repositories {
 
 dependencies {
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version" // Required for Kotlin integration
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version" // Reflect required for spring
     compile "org.springframework.boot:spring-boot-starter-web"
     testCompile('org.springframework.boot:spring-boot-starter-test')
+    compile "com.amazonaws:aws-java-sdk-dynamodb:1.11.490"
+    compile "com.github.derjust:spring-data-dynamodb:5.1.0"
+    compile 'com.fasterxml.jackson.module:jackson-module-kotlin:2.9.5'
+}
+
+task checkLocalDynamoDB(type: Exec) {
+    standardOutput = new ByteArrayOutputStream()
+    errorOutput = new ByteArrayOutputStream()
+    commandLine "docker inspect --format={{.State.Running}} spring-kotlin-dynamodb".split()
+    ignoreExitValue = true
+    doLast {
+        def databaseStatus = "RUNNING"
+        if (standardOutput.toString().trim() != 'true') {
+            if (errorOutput.toString().trim() == "Error: No such object: spring-kotlin-dynamodb") {
+                databaseStatus = "UNINSTALLED"
+            } else {
+                databaseStatus = "STOPPED"
+            }
+        }
+        println "Docker container 'spring-kotlin-dynamodb' is ${databaseStatus}."
+        ext.status = databaseStatus
+    }
+}
+
+task startLocalDynamoDB(description: "Starts the DynamoDb database") {
+    dependsOn checkLocalDynamoDB
+    doLast {
+
+        if (checkLocalDynamoDB.status == "UNINSTALLED") {
+            exec {
+                commandLine "docker run --name spring-kotlin-dynamodb -p 8000:8000 -d amazon/dynamodb-local".split()
+            }
+            println "Installed and running Docker container 'spring-kotlin-dynamodb'"
+        } else if (checkLocalDynamoDB.status == "STOPPED") {
+            exec {
+                commandLine "docker start spring-kotlin-dynamodb".split()
+            }
+            println "Started Docker container 'spring-kotlin-dynamodb'"
+        } else {
+            println "Docker container 'spring-kotlin-dynamodb' is already running"
+        }
+    }
+}
+
+task stopLocalDynamoDB(type: Exec, description: "Stops the DynamoDb database", group: "Database") {
+    commandLine "docker stop spring-kotlin-dynamodb".split()
+    ignoreExitValue = true
+    doLast {
+        println "Stopped Docker container 'spring-kotlin-dynamodb'"
+    }
+}
+
+task removeLocalDynamoDB(type: Exec, description: "Removes the DynamoDb database", group: "Database") {
+    commandLine "docker rm spring-kotlin-dynamodb".split()
+    ignoreExitValue = true
+    doLast {
+        println "Removed Docker container 'spring-kotlin-dynamodb'"
+    }
+}
+
+task createLocalDynamoDBData(description: "Create test data in local DynamoDB") {
+    doLast {
+        FilenameFilter filter = { file, name -> name.endsWith("dml.json") }
+        project.file("src/main/dynamodml/").listFiles(filter).each { file ->
+            exec {
+                commandLine "bash", "-c",
+                    "aws dynamodb batch-write-item --endpoint-url http://localhost:8000 --request-items \"\$(cat ${file.absolutePath})\""
+            }
+
+        }
+    }
 }
