@@ -1,0 +1,19 @@
+{
+    "user": [
+        {
+            "PutRequest": {
+                "Item": {
+                    "firstName": {"S": "Bex"},
+                    "lastName": {"S": "Way"},
+                    "title": {
+                        "M": {
+                            "intro": { "S": "The esteemed and honorable" },
+                            "prefix": { "S": "Mx." },
+                            "suffix": { "S": ", the first of their kind" }
+                        }
+                    }
+                }
+            }
+        }
+    ]
+}
