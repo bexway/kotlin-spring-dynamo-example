@@ -1,0 +1,15 @@
+config:
+  env: dev
+
+spring:
+  data:
+    dynamodb:
+      entity2ddl:
+        # creates tables if they don't already exist
+        # https://github.com/derjust/spring-data-dynamodb/wiki/Autocreate-Tables#Creation
+        auto: create-only
+
+# Defines end-point for local development DynamoDB.
+aws:
+  dynamodb:
+    endpoint: "http://localhost:8000"
