@@ -33,3 +33,9 @@ Create a configuration to connect the REST service with a Dynamo DB. For the pur
 Finally, add the Repository created earlier to your Controller (letting Spring's dependency injection create the instance), create a route to query your table, and test that your Application spins up. For easy testing of data retrieval, spin up an aws dynamo-local Docker image and add some data with the AWS CLI. (If you're feeling ambitious, you can populate the table with dummy data using a Gradle task ([see createLocalDynamoDBData](./build.gradle)) and some [Dynamo DML](./src/main/dynamodml/user_dml.json))
 
 If you see errors from missing classes, you may be missing a dependency. If you see `ResourceNotFoundException: Cannot do operations on a non-existent table`, you haven't created your table. You can create the table by using the AWS CLI, or by going to application.yml and ensuring that entity2ddl>auto is set to `create-only`. If you see `java.lang.NoSuchMethodException: com.shoprunner.kotlinspringdynamoexample.dynamo.User.<init>()`, the arguments for your table's data class need defaults
+
+### Step 3: Composite Keys
+
+When using both a hash and sort key, they are treated as a composite key, where the table's "id" is both of them rather than one or the other.
+
+Create a new class to represent the id, and annotate it to read the hash and sort keys. Then, make that class the primary constructor argument for your table's data class, and write getter/setter methods to interact with the hash and sort key through the composite key class.
