@@ -39,3 +39,7 @@ If you see errors from missing classes, you may be missing a dependency. If you 
 When using both a hash and sort key, they are treated as a composite key, where the table's "id" is both of them rather than one or the other.
 
 Create a new class to represent the id, and annotate it to read the hash and sort keys. Then, make that class the primary constructor argument for your table's data class, and write getter/setter methods to interact with the hash and sort key through the composite key class.
+
+### Step 4: Nested Data
+
+When data contains nested maps, they can be read in a few ways. One is to use a Map as the type for the attribute, but this depends on all items in the Map being of the same type, and with a schema-less database like Dynamo, that's not guaranteed. Instead, create a data class with the @DynamoDBDocument annotation and read the attributes into that class.
