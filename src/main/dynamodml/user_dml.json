@@ -7,7 +7,12 @@
                     "lastName": {"S": "Way"},
                     "title": {
                         "M": {
-                            "intro": { "S": "The esteemed and honorable" },
+                            "intro": {
+                                "M": {
+                                    "business": { "S": "The esteemed and honorable" },
+                                    "casual": { "S": "The super-cool and totally terrific" }
+                                }
+                            },
                             "prefix": { "S": "Mx." },
                             "suffix": { "S": ", the first of their kind" }
                         }
