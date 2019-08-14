@@ -4,11 +4,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument
 
 @DynamoDBDocument
-data class UserTitle(
+data class TitleIntro(
     @DynamoDBAttribute
-    var intro: TitleIntro? = null,
+    var business: String? = null,
     @DynamoDBAttribute
-    var prefix: String? = null,
-    @DynamoDBAttribute
-    var suffix: String? = null
+    var casual: String? = null
 )
