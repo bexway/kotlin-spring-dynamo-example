@@ -29,5 +29,5 @@ data class User (
     }
 
     @DynamoDBAttribute(attributeName = "title")
-    var userTitle: Map<String, String>? = null
+    var userTitle: UserTitle? = null
 }
