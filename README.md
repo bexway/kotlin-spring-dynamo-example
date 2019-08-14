@@ -43,3 +43,5 @@ Create a new class to represent the id, and annotate it to read the hash and sor
 ### Step 4: Nested Data
 
 When data contains nested maps, they can be read in a few ways. One is to use a Map as the type for the attribute, but this depends on all items in the Map being of the same type, and with a schema-less database like Dynamo, that's not guaranteed. Instead, create a data class with the @DynamoDBDocument annotation and read the attributes into that class.
+
+When populating your data classes, default values will be used in the case that the attribute is not found in the Dynamo object. If a null from Dynamo tries to populate a non-nullable column, an IllegalArgumentException will be thrown!

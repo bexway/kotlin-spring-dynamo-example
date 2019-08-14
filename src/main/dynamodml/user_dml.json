@@ -14,7 +14,8 @@
                                 }
                             },
                             "prefix": { "S": "Mx." },
-                            "suffix": { "S": ", the first of their kind" }
+                            "suffix": { "S": ", the first of their kind" },
+                            "status": { "NULL": true }
                         }
                     }
                 }

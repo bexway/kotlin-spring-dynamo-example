@@ -10,5 +10,7 @@ data class UserTitle(
     @DynamoDBAttribute
     var prefix: String? = null,
     @DynamoDBAttribute
-    var suffix: String? = null
+    var suffix: String? = null,
+    @DynamoDBAttribute
+    var status: String = "active"
 )
