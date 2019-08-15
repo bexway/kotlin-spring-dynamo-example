@@ -15,18 +15,12 @@ data class User (
     @JsonIgnore
     val compositeKey: UserCompositeKey = UserCompositeKey()
 ) {
-    // Getters, setters, and Key annotations are required
+    // Key annotations are still required
     @DynamoDBHashKey
-    fun getFirstName() = compositeKey.firstName
-    fun setFirstName(firstName: String) {
-        compositeKey.firstName = firstName
-    }
+    var firstName = compositeKey.firstName
 
     @DynamoDBRangeKey
-    fun getLastName() = compositeKey.lastName
-    fun setLastName(lastName: String) {
-        compositeKey.lastName = lastName
-    }
+    var lastName = compositeKey.lastName
 
     @DynamoDBAttribute(attributeName = "title")
     var userTitle: UserTitle? = null
