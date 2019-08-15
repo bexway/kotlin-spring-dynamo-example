@@ -20,8 +20,7 @@ class GreetingController(
         Greeting(counter.incrementAndGet(), "Hello, $name")
 
     @GetMapping("/user/{firstName}")
-    fun user(@PathVariable firstName: String): List<User> {
-        return userRepository.findByFirstName(firstName)
-    }
+    fun user(@PathVariable firstName: String): List<User> =
+        userRepository.findByFirstName(firstName)
 
 }
