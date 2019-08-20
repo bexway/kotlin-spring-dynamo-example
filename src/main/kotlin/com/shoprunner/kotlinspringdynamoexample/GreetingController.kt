@@ -8,6 +8,7 @@ import java.util.concurrent.atomic.AtomicLong
 
 import com.shoprunner.kotlinspringdynamoexample.dynamo.UserRepository
 import com.shoprunner.kotlinspringdynamoexample.dynamo.User
+import com.shoprunner.kotlinspringdynamoexample.dynamo.UserId
 
 @RestController
 class GreetingController(
@@ -22,5 +23,18 @@ class GreetingController(
     @GetMapping("/user/{firstName}")
     fun user(@PathVariable firstName: String): List<User> =
         userRepository.findByFirstName(firstName)
+
+    @GetMapping("/save/{firstName}/{lastName}")
+    fun save(@PathVariable firstName: String, @PathVariable lastName: String) =
+        userRepository.save(User(UserId(firstName, lastName)))
+
+    @GetMapping("/delete/{firstName}/{lastName}")
+    fun delete(@PathVariable firstName: String, @PathVariable lastName: String) =
+        userRepository.deleteById(UserId(firstName, lastName))
+
+
+    @GetMapping("/deleteall")
+    fun deleteAll() =
+        userRepository.deleteAll()
 
 }

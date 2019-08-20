@@ -7,7 +7,7 @@ import org.mockito.Mockito.mock
 import org.mockito.Mockito
 
 import com.shoprunner.kotlinspringdynamoexample.dynamo.User
-import com.shoprunner.kotlinspringdynamoexample.dynamo.UserCompositeKey
+import com.shoprunner.kotlinspringdynamoexample.dynamo.UserId
 import com.shoprunner.kotlinspringdynamoexample.dynamo.UserRepository
 
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
@@ -17,7 +17,7 @@ class GreetingControllerTest {
 
     @Test
     fun `user GET request 200`() {
-        val mockedUserList = listOf(User(UserCompositeKey("mock name", "mock last name")))
+        val mockedUserList = listOf(User(UserId("mock name", "mock last name")))
         Mockito.`when`(userRepository.findByFirstName("mock name"))
             .thenReturn(mockedUserList)
         assertThat(controller.user("mock name")).isEqualTo(mockedUserList)
