@@ -18,10 +18,8 @@ class HeightTypeConverter : DynamoDBTypeConverter<String, Height> {
     override fun unconvert(s: String?): Height {
         var height = Height()
         try {
-            println(s)
             if (s != null && s.isNotEmpty()) {
                 val data = s.split("[\"\']".toRegex()).dropLastWhile { it.isEmpty() }.toTypedArray()
-                println(data)
                 height = Height(
                     data[0].trim { it <= ' ' }.toInt(),
                     data[1].trim { it <= ' ' }.toInt()
