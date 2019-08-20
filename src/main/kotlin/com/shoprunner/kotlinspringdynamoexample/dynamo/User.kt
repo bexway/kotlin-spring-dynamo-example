@@ -5,6 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id
 
@@ -32,4 +33,8 @@ data class User (
 
     @DynamoDBAttribute(attributeName = "title")
     var userTitle: UserTitle? = null
+
+    @DynamoDBTypeConverted(converter = HeightTypeConverter::class)
+    @DynamoDBAttribute(attributeName = "height")
+    var height: Height? = null
 }
