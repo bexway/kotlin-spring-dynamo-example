@@ -17,10 +17,18 @@ data class User (
 ) {
     // Key annotations are still required
     @DynamoDBHashKey
-    var firstName = compositeKey.firstName
+    fun getFirstName() = compositeKey.firstName
+
+    fun setFirstName(firstName: String) {
+        compositeKey.firstName = firstName
+    }
 
     @DynamoDBRangeKey
-    var lastName = compositeKey.lastName
+    fun getLastName() = compositeKey.lastName
+
+    fun setLastName(lastName: String) {
+        compositeKey.lastName = lastName
+    }
 
     @DynamoDBAttribute(attributeName = "title")
     var userTitle: UserTitle? = null
