@@ -1,6 +1,8 @@
 .idea/
 .idea
 .gradle
+gradle
+gradlew*
 *.iml
 *.jar
 .DS_Store
