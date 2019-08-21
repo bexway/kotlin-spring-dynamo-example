@@ -6,7 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey
 import java.io.Serializable
 
 @DynamoDBDocument
-data class UserCompositeKey(
+data class UserId(
 
     @field:DynamoDBHashKey
     var firstName: String = "",

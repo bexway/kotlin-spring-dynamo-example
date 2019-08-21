@@ -16,7 +16,8 @@
                             "prefix": { "S": "Mx." },
                             "suffix": { "S": ", the first of their kind" }
                         }
-                    }
+                    },
+                    "height":{"S": "5' 4\""}
                 }
             }
         }

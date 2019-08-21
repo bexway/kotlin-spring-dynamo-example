@@ -42,7 +42,7 @@ test {
     useJUnitPlatform()
 }
 
-task checkLocalDynamoDB(type: Exec) {
+task checkLocalDynamoDB(type: Exec, group: "Database") {
     standardOutput = new ByteArrayOutputStream()
     errorOutput = new ByteArrayOutputStream()
     commandLine "docker inspect --format={{.State.Running}} spring-kotlin-dynamodb".split()
@@ -61,7 +61,7 @@ task checkLocalDynamoDB(type: Exec) {
     }
 }
 
-task startLocalDynamoDB(description: "Starts the DynamoDb database") {
+task startLocalDynamoDB(description: "Starts the DynamoDb database", group: "Database") {
     dependsOn checkLocalDynamoDB
     doLast {
 
@@ -97,7 +97,7 @@ task removeLocalDynamoDB(type: Exec, description: "Removes the DynamoDb database
     }
 }
 
-task createLocalDynamoDBData(description: "Create test data in local DynamoDB") {
+task createLocalDynamoDBData(description: "Create test data in local DynamoDB", group: "Database") {
     doLast {
         FilenameFilter filter = { file, name -> name.endsWith("dml.json") }
         project.file("src/main/dynamodml/").listFiles(filter).each { file ->
