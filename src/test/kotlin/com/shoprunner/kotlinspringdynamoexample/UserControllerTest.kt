@@ -11,9 +11,9 @@ import com.shoprunner.kotlinspringdynamoexample.dynamo.UserId
 import com.shoprunner.kotlinspringdynamoexample.dynamo.UserRepository
 
 @TestInstance(TestInstance.Lifecycle.PER_METHOD)
-class GreetingControllerTest {
+class UserControllerTest {
     private val userRepository = mock(UserRepository::class.java)
-    private val controller = GreetingController(userRepository)
+    private val controller = UserController(userRepository)
 
     @Test
     fun `user GET request 200`() {

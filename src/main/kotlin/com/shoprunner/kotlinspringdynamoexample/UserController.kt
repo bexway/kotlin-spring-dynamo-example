@@ -7,24 +7,27 @@ import org.springframework.web.bind.annotation.RestController
 import com.shoprunner.kotlinspringdynamoexample.dynamo.UserRepository
 import com.shoprunner.kotlinspringdynamoexample.dynamo.User
 import com.shoprunner.kotlinspringdynamoexample.dynamo.UserId
+import org.springframework.web.bind.annotation.DeleteMapping
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 
 @RestController
-class GreetingController(
+class UserController(
     val userRepository: UserRepository
 ) {
     @GetMapping("/user/{firstName}")
     fun user(@PathVariable firstName: String): List<User> =
         userRepository.findByFirstName(firstName)
 
-    @GetMapping("/save/{firstName}/{lastName}")
-    fun save(@PathVariable firstName: String, @PathVariable lastName: String) =
-        userRepository.save(User(UserId(firstName, lastName)))
+    @PostMapping("/save")
+    fun save(@RequestBody userId: UserId): User =
+        userRepository.save(User(userId))
 
-    @GetMapping("/delete/{firstName}/{lastName}")
-    fun delete(@PathVariable firstName: String, @PathVariable lastName: String) =
-        userRepository.deleteById(UserId(firstName, lastName))
+    @DeleteMapping("/delete")
+    fun delete(@RequestBody userId: UserId) =
+        userRepository.deleteById(userId)
 
-    @GetMapping("/deleteall")
+    @DeleteMapping("/deleteall")
     fun deleteAll() =
         userRepository.deleteAll()
 

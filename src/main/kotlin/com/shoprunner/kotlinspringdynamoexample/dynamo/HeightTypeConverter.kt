@@ -2,6 +2,7 @@ package com.shoprunner.kotlinspringdynamoexample.dynamo
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverter
 
+// Reference: https://docs.aws.amazon.com/amazondynamodb/latest/developerguide/DynamoDBMapper.ArbitraryDataMapping.html
 class HeightTypeConverter : DynamoDBTypeConverter<String, Height> {
 
     override fun convert(height: Height): String? {
