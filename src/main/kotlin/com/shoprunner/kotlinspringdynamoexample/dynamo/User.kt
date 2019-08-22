@@ -6,6 +6,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIgnore
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConverted
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTypeConvertedJson
 import com.fasterxml.jackson.annotation.JsonIgnore
 import org.springframework.data.annotation.Id
 
@@ -33,6 +34,9 @@ data class User (
 
     @DynamoDBAttribute(attributeName = "title")
     var userTitle: UserTitle? = null
+
+    @DynamoDBTypeConvertedJson
+    var favoriteJsonBlob: FavoriteJsonBlob? = null
 
     @DynamoDBTypeConverted(converter = HeightTypeConverter::class)
     @DynamoDBAttribute(attributeName = "height")
